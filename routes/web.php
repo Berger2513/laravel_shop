@@ -12,4 +12,7 @@
 */
 
 Route::get('/', 'PagesController@root')->name('root');
-Route::get('/test', 'PagesController@root')->name('home.root');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

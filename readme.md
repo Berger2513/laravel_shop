@@ -11,7 +11,7 @@
 
 不起眼 不会说话的90油腻大叔，慢慢自学，看到laravel 就开始喜欢它。
 所以很懒 很迷惘 但是会一直走下去， 绝不犹豫。
-简书：<a href="https://www.jianshu.com/u/b798a2dc104b">
+<a href="https://www.jianshu.com/u/b798a2dc104b">简书</a>
 
 <!-- ## Learning Laravel
 
