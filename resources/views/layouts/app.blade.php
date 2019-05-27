@@ -21,6 +21,14 @@
     </div>
     <!-- JS 脚本 -->
     <script src="{{ mix('js/app.js') }}"></script>
+    <script src="{{ asset('asset/layui/layui.js') }}"></script>
      @yield('js')
+     <script>
+        layui.use('element', function(){
+          var element = layui.element;
+          
+          //…
+        });
+    </script>
 </body>
 </html>
