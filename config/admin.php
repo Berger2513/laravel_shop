@@ -85,7 +85,7 @@ return [
     | Html title for all pages.
     |
     */
-    'title' => 'Admin',
+    'title' => 'Berger Admin 后台管理',
 
     /*
     |--------------------------------------------------------------------------
