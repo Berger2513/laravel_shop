@@ -13,6 +13,8 @@
 
 Route::get('/', 'PagesController@root')->name('root');
 
+Route::redirect('/', '/products')->name('root');
+
 Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -29,5 +31,8 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
     Route::put('user_addresses/{user_address}', 'UserAddressController@update')->name('user_addresses.update');
 
     Route::delete('user_addresses/{user_address}', 'UserAddressController@destroy')->name('user_addresses.destroy');
+
+    //商品
+    Route::get('products', 'ProductController@index')->name('products.index');
 
 });
