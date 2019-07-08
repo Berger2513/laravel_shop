@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Exceptions\InvalidRequestException;
 
 class ProductController extends Controller
 {
@@ -51,5 +52,62 @@ class ProductController extends Controller
             'filters'  => $filters,
         ]);
 
+    }
+
+
+    public function show(Product $product, Request $request)
+    {
+        // 判断商品是否已经上架，如果没有上架则抛出异\常。
+        if (!$product->on_sale) {
+            throw new InvalidRequestException('商品未上架');
+        }
+        $user = $request->user();
+        $product_status = false;
+       if($user->favoriteProducts->find($product)){
+            $product_status = true;
+       }
+        return view('product.show', ['product' => $product, 'product_status'=> $product_status]);
+    }
+
+    public function favor(Product $product, Request $request)
+    {
+
+
+        $user = $request->user();
+        if ($user->favoriteProducts()->find($request->product_id)) {
+            return response()->json(["status" => 1]);
+        }
+
+        $user->favoriteProducts()->attach(Product::find($request->product_id));
+
+        return response()->json(["status" => 2]);
+
+    }
+
+    public function disfavor(Product $product, Request $request)
+    {
+        $user = $request->user();
+
+        try {
+            //code...
+            $user->favoriteProducts()->detach($request->product_id);
+           return response()->json(["status" => 2]);
+
+
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response()->json(["status" => 1]);
+
+        }
+
+
+
+    }
+
+     public function favorites(Request $request)
+    {
+        $products = $request->user()->favoriteProducts()->paginate(16);
+
+        return view('product.favorites', ['products' => $products]);
     }
 }

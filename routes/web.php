@@ -14,6 +14,7 @@
 Route::get('/', 'PagesController@root')->name('root');
 
 Route::redirect('/', '/products')->name('root');
+Route::get('products', 'ProductController@index')->name('products.index');
 
 Auth::routes(['verify' => true]);
 
@@ -33,6 +34,25 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
     Route::delete('user_addresses/{user_address}', 'UserAddressController@destroy')->name('user_addresses.destroy');
 
     //商品
-    Route::get('products', 'ProductController@index')->name('products.index');
+    //收藏页面
+    Route::get('products/favorites', 'ProductController@favorites')->name('products.favorites');
+
+
+
+    Route::get('products/{product}', 'ProductController@show')->name('products.show');
+    // Route::post('products/{product}/favorite', 'ProductsController@favor')->name('products.favor');
+    // Route::delete('products/{product}/favorite', 'ProductsController@disfavor')->name('products.disfavor');
+    Route::post('products/favorite', 'ProductController@favor')->name('products.favor');
+
+    Route::post('products/disfavor', 'ProductController@disfavor')->name('products.disfavor');
+    Route::get('products/favorites', 'ProductController@favorites')->name('products.favorites');
+    //购物车
+    Route::post('cart', 'CartController@add')->name('cart.add');
+    Route::get('cart', 'CartController@index')->name('cart.index');
+    Route::get('cart/{sku}', 'CartController@remove')->name('cart.remove');
+
+     Route::post('orders', 'OrdersController@store')->name('orders.store');
+
+      Route::get('orders', 'OrdersController@index')->name('orders.index');
 
 });
